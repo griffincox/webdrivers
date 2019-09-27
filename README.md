@@ -10,10 +10,10 @@ Run Selenium tests more easily with automatic installation and updates for all s
 
 `webdrivers` downloads drivers and directs Selenium to use them. Currently supports:
 
-* [chromedriver](http://chromedriver.chromium.org/)
-* [geckodriver](https://github.com/mozilla/geckodriver)
-* [IEDriverServer](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver)
-* [msedgedriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)  - Dev and Canary releases on Windows and macOS only
+-   [chromedriver](http://chromedriver.chromium.org/)
+-   [geckodriver](https://github.com/mozilla/geckodriver)
+-   [IEDriverServer](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver)
+-   [msedgedriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)  - Dev and Canary releases on Windows and macOS only
 
 ## Usage
 
@@ -45,12 +45,20 @@ require 'webdrivers/edgedriver'
 
 The default download location is `~/.webdrivers` directory, and this is configurable:
 
- ```ruby
- Webdrivers.install_dir = '/webdrivers/install/dir'
+```ruby
+Webdrivers.install_dir = '/webdrivers/install/dir'
 ```
 
 Alternatively, you can define the path via the `WD_INSTALL_DIR` environment
 variable.
+
+#### When Using the parallel_tests gem
+
+When using the [parallel_tests](https://github.com/grosser/parallel_tests) gem, make sure to include this wherever you setup your testing environment:
+
+```ruby
+Webdrivers.install_dir = File.expand_path('/webdrivers/install/dir' + ENV['TEST_ENV_NUMBER'].to_s)
+```
 
 ### Version Pinning
 
@@ -102,14 +110,14 @@ using a compatible version.
 If there is a proxy between you and the Internet then you will need to configure
 the gem to use the proxy.  You can do this by calling the `configure` method.
 
-````ruby
+```ruby
 Webdrivers.configure do |config|
   config.proxy_addr = 'myproxy_address.com'
   config.proxy_port = '8080'
   config.proxy_user = 'username'
   config.proxy_pass = 'password'
 end
-````
+```
 
 ### `SSL_connect` errors
 
@@ -125,9 +133,9 @@ gem "net_http_ssl_fix"
 
 Add the following to your code:
 
-````ruby
+```ruby
 require 'net_http_ssl_fix'
-````
+```
 
 Other solutions are documented on the RubyGems [website](https://guides.rubygems.org/ssl-certificate-update/).
 
@@ -198,11 +206,11 @@ Webdrivers.logger.level = :DEBUG
 
 The version of `chromedriver` will depend on the version of Chrome you are using it with:
 
- * For versions >= 70, the downloaded version of `chromedriver` will match the installed version of Google Chrome.
- More information [here](http://chromedriver.chromium.org/downloads/version-selection).
- * For versions <=  69, `chromedriver` version 2.41 will be downloaded.
- * For beta versions, you'll have to require the beta version of `chromedriver`
- using `Webdrivers::Chromedriver.required_version`.
+-   For versions >= 70, the downloaded version of `chromedriver` will match the installed version of Google Chrome.
+    More information [here](http://chromedriver.chromium.org/downloads/version-selection).
+-   For versions &lt;=  69, `chromedriver` version 2.41 will be downloaded.
+-   For beta versions, you'll have to require the beta version of `chromedriver`
+    using `Webdrivers::Chromedriver.required_version`.
 
 The gem looks for the Chrome/Chromium version that `chromedriver` will use by default.
 You can override this behavior by providing a path to the browser binary you want to use:
